@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aloiki <aloiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/30 00:18:28 by aloiki            #+#    #+#             */
-/*   Updated: 2024/11/30 14:17:01 by aloiki           ###   ########.fr       */
+/*   Created: 2024/11/30 14:15:11 by aloiki            #+#    #+#             */
+/*   Updated: 2024/11/30 14:18:18 by aloiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "pipex.h"
 
-# include "libft/libft.h"
-# include <string.h>
-# include <stdio.h>
-# include <sys/wait.h>
-# include <sys/types.h>
+char	*free_and_null(char **matrix)
+{
+	int	i;
 
-void	execute_command(char *argv, char **envp);
-char	*free_and_null(char **matrix);
-
-#endif
+	i = 0;
+	while (matrix[i++])
+		free(matrix[i]);
+	free(matrix);
+	return (NULL);
+}

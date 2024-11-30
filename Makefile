@@ -5,7 +5,7 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 PRINTF_DIR = $(LIBFT_DIR)/ft_printf
 PRINTF = $(PRINTF_DIR)/libftprintf.a
-SRC = pipex.c utils.c \
+SRC = pipex.c utils.c utils2.c \
 
 OBJ = $(SRC:.c=.o)
 all: $(LIBFT) $(PRINTF) $(NAME)
