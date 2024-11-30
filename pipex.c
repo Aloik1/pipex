@@ -6,7 +6,7 @@
 /*   By: aloiki <aloiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:05:48 by aloiki            #+#    #+#             */
-/*   Updated: 2024/11/30 00:18:14 by aloiki           ###   ########.fr       */
+/*   Updated: 2024/11/30 14:08:44 by aloiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@ static void	child_process(char **argv, char **envp, int *fd)
 
 	infile = open(argv[1], O_RDONLY, 0777);
 	if (infile == -1)
-		ft_printerror("Couldn't open infile");
+	{
+		ft_putstr_fd("line 1: ", 2);
+		ft_putstr_fd(argv[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	if (fd[1] == -1 || fd[0] == -1)
 		ft_printerror("Invalid file descriptor\n");
 	dup2(fd[1], STDOUT_FILENO);
@@ -32,8 +37,6 @@ static void	parent_process(char **argv, char **envp, int *fd)
 	int	outfile;
 
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (outfile == -1)
-		ft_printerror("Couldn't open outfile");
 	dup2(fd[0], STDIN_FILENO);
 	dup2(outfile, STDOUT_FILENO);
 	close(fd[1]);

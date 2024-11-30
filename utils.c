@@ -6,7 +6,7 @@
 /*   By: aloiki <aloiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 18:24:31 by aloiki            #+#    #+#             */
-/*   Updated: 2024/11/30 00:19:58 by aloiki           ###   ########.fr       */
+/*   Updated: 2024/11/30 14:05:32 by aloiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,21 @@ static char	*path_finder(char *command, char **envp)
 	i = 0;
 	while (paths[i++])
 	{
+		if (paths[i] == NULL)
+		{
+			i = 0;
+			while (paths[i++])
+				free(paths[i]);
+			free(paths);
+			return (NULL);
+		}
 		path_piece = ft_strjoin(paths[i], "/");
 		full_path = ft_strjoin(path_piece, command);
 		free(path_piece);
 		if (access(full_path, F_OK) == 0)
 			return (full_path);
-		free(full_path);
+		if (full_path != NULL)
+			free(full_path);
 	}
 	i = 0;
 	while (paths[i++])
@@ -121,17 +130,16 @@ void	execute_command(char *argv, char **envp)
 {
 	char	**command;
 	char	*path;
-	int		i;
 
-	i = 0;
 	command = ft_split(argv, ' ');
 	path = path_finder(command[0], envp);
 	if (!path)
 	{
-		while (command[i++])
-			free(command[i]);
-		free(command);
-		ft_printerror("Couldn't find path");
+		ft_putstr_fd("line 1: ", 2);
+		ft_putstr_fd(command[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(EXIT_FAILURE);
+		
 	}
 	if (ft_strchr(argv, 39) || ft_strchr(argv, 34))
 		command = modify_command(argv, command);
