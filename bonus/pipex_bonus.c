@@ -12,29 +12,29 @@
 
 #include "pipex_bonus.h"
 
-static void	read_from_doc(char *argv1, char *limiter, int argc)
+static void	read_from_buffer(char *limiter, int argc)
 {
 	pid_t	separator;
 	char	*line;
-	int		doc_fd;
 	int		fd[2];
 
 	if (pipe(fd) == -1)
 		ft_printerror("Pipe creation failed");
 	if (argc < 6)
 		ft_printerror("Invalid format");
+	ft_printf("> ");
 	separator = fork();
 	if (separator == 0)
 	{
 		close(fd[0]);
-		doc_fd = open(argv1, O_RDONLY);
-		line = get_next_line(doc_fd);
+		line = get_next_line(0);
 		while (line)
 		{
-			if (ft_strncmp(line, limiter, ft_strlen(line)) == 0)
+			if (ft_strncmp(ft_strtrim(line, "\n"), limiter, ft_strlen(line)) == 0)
 				exit(1);
+			ft_printf("> ");
 			write(fd[1], line, ft_strlen(line));
-			line = get_next_line(doc_fd);
+			line = get_next_line(0);
 		}
 	}
 	else
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			i = 3;
 			outfile = how_to_open(argv[argc - 1], 0);
-			read_from_doc(argv[1], argv[2], argc);
+			read_from_buffer(argv[2], argc);
 		}
 		else
 		{
