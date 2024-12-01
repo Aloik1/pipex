@@ -77,6 +77,12 @@ int	main(int argc, char **argv, char **envp)
 	int		outfile;
 
 	i = 0;
+	while (argv[i])
+	{
+		if (argv[i][0] == '\0')
+			ft_printerror("Invalid arguments");
+		i++;
+	}
 	if (argc < 5)
 		ft_printerror("Invalid number of arguments");
 	if (argc >= 5)
