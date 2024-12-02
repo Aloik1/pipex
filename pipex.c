@@ -6,7 +6,7 @@
 /*   By: aloiki <aloiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:05:48 by aloiki            #+#    #+#             */
-/*   Updated: 2024/12/02 18:42:09 by aloiki           ###   ########.fr       */
+/*   Updated: 2024/12/02 19:13:39 by aloiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	child;
 	int		files[2];
 
-	if (argc != 5)
-		ft_printerror("Invalid number of arguments");
+	check_valid_args(argc, argv);
 	if (pipe(files) == -1)
 		ft_printerror("Couldn't create pipe");
 	child = fork();

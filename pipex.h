@@ -6,7 +6,7 @@
 /*   By: aloiki <aloiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 00:18:28 by aloiki            #+#    #+#             */
-/*   Updated: 2024/12/02 14:02:49 by aloiki           ###   ########.fr       */
+/*   Updated: 2024/12/02 19:13:46 by aloiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 
 void	execute_command(char *argv, char **envp);//, int fd);
 char	*free_and_null(char **matrix);
+void	check_valid_args(int argc, char **argv);
 
 #endif
