@@ -6,7 +6,7 @@
 /*   By: aloiki <aloiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:05:48 by aloiki            #+#    #+#             */
-/*   Updated: 2024/11/30 17:56:41 by aloiki           ###   ########.fr       */
+/*   Updated: 2024/12/02 13:39:40 by aloiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	read_from_buffer(char *limiter, int argc)
 {
 	pid_t	separator;
 	char	*line;
+	char	*line_no_nl;
 	int		fd[2];
 
 	if (pipe(fd) == -1)
@@ -27,13 +28,16 @@ static void	read_from_buffer(char *limiter, int argc)
 	if (separator == 0)
 	{
 		close(fd[0]);
-		line = get_next_line(0);
+		line = get_next_line(0); 
 		while (line)
 		{
-			if (ft_strncmp(ft_strtrim(line, "\n"), limiter, ft_strlen(line)) == 0)
+			line_no_nl = ft_strtrim(line, "\n");
+			if (ft_strncmp(line_no_nl, limiter, ft_strlen(line)) == 0)
 				exit(1);
+			free(line_no_nl);
 			ft_printf("> ");
 			write(fd[1], line, ft_strlen(line));
+			free(line);
 			line = get_next_line(0);
 		}
 	}

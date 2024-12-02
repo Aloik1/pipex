@@ -6,7 +6,7 @@
 /*   By: aloiki <aloiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:05:48 by aloiki            #+#    #+#             */
-/*   Updated: 2024/11/30 14:08:44 by aloiki           ###   ########.fr       */
+/*   Updated: 2024/12/02 18:42:09 by aloiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ int	main(int argc, char **argv, char **envp)
 	if (child == -1)
 		ft_printerror("Forking failed\n");
 	if (child == 0)
+	{
 		child_process(argv, envp, files);
+		exit(0);
+	}
 	waitpid(child, NULL, 0);
 	parent_process(argv, envp, files);
 }

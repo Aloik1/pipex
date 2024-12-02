@@ -1,6 +1,6 @@
 NAME = pipex
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror ##-g3 -fsanitize=address
 LIBFT_DIR = ../libft
 LIBFT = $(LIBFT_DIR)/libft.a
 PRINTF_DIR = $(LIBFT_DIR)/ft_printf

@@ -6,7 +6,7 @@
 /*   By: aloiki <aloiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 18:24:31 by aloiki            #+#    #+#             */
-/*   Updated: 2024/11/30 14:18:11 by aloiki           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:05:05 by aloiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static char	**modify_command(char *argv, char **command)
 	return (command);
 }
 
-void	execute_command(char *argv, char **envp)
+void	execute_command(char *argv, char **envp)//, int fd)
 {
 	char	**command;
 	char	*path;
@@ -134,4 +134,5 @@ void	execute_command(char *argv, char **envp)
 		command = modify_command(argv, command);
 	if (execve(path, command, envp) == -1)
 		ft_printerror("Couldn't execute new process");
+	//close(fd);
 }

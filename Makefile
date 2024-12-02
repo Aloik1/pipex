@@ -1,7 +1,7 @@
 NAME = pipex
 NAME_BONUS = pipex_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror ##-g3 -fsanitize=address
 BONUS_DIR = bonus
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
