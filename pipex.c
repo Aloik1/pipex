@@ -6,7 +6,7 @@
 /*   By: aloiki <aloiki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 17:05:48 by aloiki            #+#    #+#             */
-/*   Updated: 2024/12/02 19:13:39 by aloiki           ###   ########.fr       */
+/*   Updated: 2024/12/03 23:38:43 by aloiki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	child_process(char **argv, char **envp, int *fd)
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(infile, STDIN_FILENO);
 	close(fd[0]);
+	ft_printf("command to pass is %s\n", argv[2]);
 	execute_command(argv[2], envp);
 }
 
@@ -53,21 +54,22 @@ int	main(int argc, char **argv, char **envp)
 	if (pipe(files) == -1)
 		ft_printerror("Couldn't create pipe");
 	child1 = fork();
-	
 	if (child1 == -1)
-		ft_printerror("Forking failed\n");
+		ft_printerror("Forking failed");
 	if (child1 == 0)
 	{
 		child_process(argv, envp, files);
 		exit(0);
 	}
+	waitpid(child1, NULL, 0);
 	child2 = fork();
+	if (child2 == -1)
+		ft_printerror("Forking failed");
 	if (child2 == 0)
 	{
 		other_child_process(argv, envp, files);
 		exit(0);
 	}
 	waitpid(child1, NULL, 0);
-	waitpid(child2, NULL, 0);
 	exit (EXIT_SUCCESS);
 }
