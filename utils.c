@@ -71,6 +71,8 @@ static char	*path_finder(char *command, char **envp)
 	int		i;
 
 	i = 0;
+	if (ft_strnstr(envp[i], "SHELL=/bin/zsh", 14))
+		return (command);
 	while (!ft_strnstr(envp[i], "PATH", 4))
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
@@ -133,5 +135,10 @@ void	execute_command(char *argv, char **envp)
 	if (ft_strchr(argv, 39) || ft_strchr(argv, 34))
 		command = modify_command(argv, command);
 	if (execve(path, command, envp) == -1)
-		ft_printerror("Couldn't execute new process");
+	{
+		ft_putstr_fd("line 1: ", 2);
+		ft_putstr_fd(command[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(EXIT_FAILURE);
+	}
 }

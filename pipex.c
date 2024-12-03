@@ -16,7 +16,7 @@ static void	child_process(char **argv, char **envp, int *fd)
 {
 	int	infile;
 
-	infile = open(argv[1], O_RDONLY, 0777);
+	infile = open(argv[1], O_RDONLY);
 	if (infile == -1)
 	{
 		ft_putstr_fd("line 1: ", 2);
@@ -32,7 +32,7 @@ static void	child_process(char **argv, char **envp, int *fd)
 	execute_command(argv[2], envp);
 }
 
-static void	parent_process(char **argv, char **envp, int *fd)
+static void	other_child_process(char **argv, char **envp, int *fd)
 {
 	int	outfile;
 
@@ -45,20 +45,29 @@ static void	parent_process(char **argv, char **envp, int *fd)
 
 int	main(int argc, char **argv, char **envp)
 {
-	pid_t	child;
+	pid_t	child1;
+	pid_t	child2;
 	int		files[2];
 
 	check_valid_args(argc, argv);
 	if (pipe(files) == -1)
 		ft_printerror("Couldn't create pipe");
-	child = fork();
-	if (child == -1)
+	child1 = fork();
+	
+	if (child1 == -1)
 		ft_printerror("Forking failed\n");
-	if (child == 0)
+	if (child1 == 0)
 	{
 		child_process(argv, envp, files);
 		exit(0);
 	}
-	waitpid(child, NULL, 0);
-	parent_process(argv, envp, files);
+	child2 = fork();
+	if (child2 == 0)
+	{
+		other_child_process(argv, envp, files);
+		exit(0);
+	}
+	waitpid(child1, NULL, 0);
+	waitpid(child2, NULL, 0);
+	exit (EXIT_SUCCESS);
 }

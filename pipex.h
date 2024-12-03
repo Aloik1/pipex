@@ -19,8 +19,9 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 
-void	execute_command(char *argv, char **envp);//, int fd);
+void	execute_command(char *argv, char **envp);
 char	*free_and_null(char **matrix);
 void	check_valid_args(int argc, char **argv);
+
 
 #endif
