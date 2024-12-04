@@ -60,7 +60,6 @@ int	main(int argc, char **argv, char **envp)
 		child_process(argv, envp, files);
 		exit(0);
 	}
-	waitpid(child1, NULL, 0);
 	child2 = fork();
 	if (child2 == -1)
 		ft_printerror("Forking failed");
