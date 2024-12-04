@@ -21,15 +21,14 @@ static void	child_process(char **argv, char **envp, int *fd)
 	{
 		ft_putstr_fd("line 1: ", 2);
 		ft_putstr_fd(argv[1], 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		exit(EXIT_FAILURE);
+		perror(" ");
+		exit(127);
 	}
 	if (fd[1] == -1 || fd[0] == -1)
 		ft_printerror("Invalid file descriptor\n");
 	dup2(fd[1], STDOUT_FILENO);
 	dup2(infile, STDIN_FILENO);
 	close(fd[0]);
-	ft_printf("command to pass is %s\n", argv[2]);
 	execute_command(argv[2], envp);
 }
 

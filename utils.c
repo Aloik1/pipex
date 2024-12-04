@@ -63,7 +63,7 @@ static char	**split_command(char *arg)
 	return (command);
 }
 
-static char	*path_finder(char *command, char **envp)
+char	*path_finder(char *command, char **envp)
 {
 	char	**paths;
 	char	*path_piece;
@@ -130,7 +130,7 @@ void	execute_command(char *argv, char **envp)
 		ft_putstr_fd("line 1: ", 2);
 		ft_putstr_fd(command[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 	if (ft_strchr(argv, 39) || ft_strchr(argv, 34))
 		command = modify_command(argv, command);
@@ -139,6 +139,6 @@ void	execute_command(char *argv, char **envp)
 		ft_putstr_fd("line 1: ", 2);
 		ft_putstr_fd(command[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
-		exit(EXIT_FAILURE);
+		exit(127);
 	}
 }
