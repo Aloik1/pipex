@@ -38,8 +38,8 @@ int	how_to_open(char *argv, int i)
 	{
 		ft_putstr_fd("line 1: ", 2);
 		ft_putstr_fd(argv, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		exit(EXIT_FAILURE);
+		perror(" ");
+		exit(127);
 	}
 	return (fd);
 }

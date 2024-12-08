@@ -37,6 +37,13 @@ static void	other_child_process(char **argv, char **envp, int *fd)
 	int	outfile;
 
 	outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (outfile == -1)
+	{
+		ft_putstr_fd("line 1: ", 2);
+		ft_putstr_fd(argv[1], 2);
+		perror(" ");
+		exit(127);
+	}
 	dup2(fd[0], STDIN_FILENO);
 	dup2(outfile, STDOUT_FILENO);
 	close(fd[1]);
